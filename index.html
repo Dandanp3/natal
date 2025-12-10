@@ -518,14 +518,21 @@
         });
 
         function checkRoute() {
-            // Primeiro, verificar se veio do 404.html
-            const redirectPath = sessionStorage.redirectPath;
-            const currentPath = redirectPath || window.location.pathname;
+            const redirectPath = sessionStorage.getItem('redirectPath');
+            const currentPath = window.location.pathname;
             
-            console.log("[v0] Checking route - redirectPath:", redirectPath, "pathname:", window.location.pathname);
+            console.log("[v0] checkRoute - redirectPath:", redirectPath, "pathname:", currentPath);
             
-            // Extrair o nome da URL (ex: /natal/daniel ou /natal/daniel/)
-            const match = currentPath.match(/\/natal\/([a-zA-Z0-9]+)\/?$/i);
+            // Tentar primeiro com redirectPath (do 404.html)
+            let pathToCheck = redirectPath || currentPath;
+            
+            // Extrair o nome da URL (ex: /natal/daniel ou /daniel)
+            let match = pathToCheck.match(/\/natal\/([a-zA-Z0-9]+)\/?$/i);
+            
+            // Se não encontrou com /natal/, tentar sem
+            if (!match) {
+                match = pathToCheck.match(/\/([a-zA-Z0-9]+)\/?$/i);
+            }
             
             if (match && match[1]) {
                 const nameFromUrl = decodeURIComponent(match[1]);
@@ -533,9 +540,7 @@
                 document.getElementById('name-input').value = nameFromUrl;
                 
                 // Limpar sessionStorage após usar
-                if (redirectPath) {
-                    sessionStorage.redirectPath = '';
-                }
+                sessionStorage.removeItem('redirectPath');
                 
                 setTimeout(() => {
                     searchPerson();
