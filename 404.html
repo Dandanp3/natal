@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecionando...</title>
+    <script>
+        // Capturar o caminho original (ex: /natal/daniel)
+        const path = window.location.pathname;
+        console.log("[v0] 404 caught path:", path);
+        
+        // Se for uma rota /natal/*, redirecionar para index.html mantendo o path
+        if (path.includes('/natal/')) {
+            // Armazenar o path e redirecionar
+            sessionStorage.redirectPath = path;
+            window.location.href = '/index.html';
+        } else {
+            // Para outras rotas 404, redirecionar para home
+            window.location.href = '/';
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

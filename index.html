@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎄 Amigo Secreto Natalino 🎁</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #c41e3a;
+            --secondary: #165b33;
+            --gold: #ffd700;
+            --light: #fff8f0;
+            --dark: #1a1a1a;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 50%, var(--secondary) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Efeito de neve */
+        @keyframes snowfall {
+            to { transform: translateY(100vh) rotateZ(360deg); }
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: var(--white);
+            font-size: 1.5em;
+            opacity: 0.8;
+            animation: snowfall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container Principal */
+        .container {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 3px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: twinkle 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Página Inicial */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header p {
+            font-size: 0.95em;
+            color: var(--secondary);
+            font-style: italic;
+        }
+
+        /* Decoração */
+        .decoration {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+            letter-spacing: 5px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            font-size: 1em;
+            background: var(--white);
+            color: var(--dark);
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(22, 91, 51, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Botão */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            family: 'Georgia', serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #ff1744);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(22, 91, 51, 0.4);
+            font-size: 1em;
+            padding: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: #0d3d1f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(22, 91, 51, 0.6);
+        }
+
+        /* Resultado */
+        .result-card {
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card h2 {
+            color: var(--primary);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .person-name {
+            font-size: 3em;
+            color: var(--secondary);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .secret-message {
+            background: rgba(196, 30, 58, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: var(--dark);
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .secret-message strong {
+            color: var(--primary);
+        }
+
+        .emoji-large {
+            font-size: 4em;
+            margin: 20px 0;
+            animation: wiggle 0.5s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        /* Erro */
+        .error-message {
+            background: #ffebee;
+            color: var(--primary);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Responsivo */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .person-name {
+                font-size: 2.5em;
+            }
+
+            .emoji-large {
+                font-size: 3em;
+            }
+
+            .result-card {
+                padding: 20px;
+            }
+        }
+
+        /* Decoração de Natal */
+        .holly {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .instructions {
+            background: rgba(196, 30, 58, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--dark);
+            border-left: 4px solid var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- Página Inicial -->
+            <div class="page active" id="home-page">
+                <div class="header">
+                    <h1>🎄 Amigo Secreto 🎁</h1>
+                    <p>Sorteio Natalino com Magia</p>
+                </div>
+
+                <div class="decoration">
+                    ❄️ ✨ 🎅 ✨ ❄️
+                </div>
+
+                <div class="instructions">
+                    <strong>🔔 Como funciona:</strong><br>
+                    Digite seu nome abaixo para descobrir quem você tirou no sorteio. 
+                    <strong>Guarde este segredo com você!</strong> 🤐
+                </div>
+
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="name-input" 
+                        placeholder="Digite seu nome..." 
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button class="btn btn-primary" onclick="searchPerson()">
+                    🎁 Revelar Meu Sorteado 🎁
+                </button>
+
+                <div class="decoration" style="margin-top: 30px;">
+                    🎄 🕯️ 🎄 🕯️ 🎄
+                </div>
+
+                <div class="secret-message">
+                    <strong>💭 Dica:</strong> Se você foi sorteado por alguém, 
+                    receberá o link pessoal para descobrir.
+                </div>
+            </div>
+
+            <!-- Página de Resultado -->
+            <div class="page" id="result-page">
+                <div class="header">
+                    <h1>🎄 Revelação 🎁</h1>
+                    <p>Seu Amigo Secreto</p>
+                </div>
+
+                <div id="error-container"></div>
+
+                <div class="result-card">
+                    <h2 id="greeting">Oi, <span id="person-name"></span>!</h2>
+                    
+                    <div class="emoji-large">🎅 🎁 🎄</div>
+                    
+                    <p style="font-size: 1.1em; margin-bottom: 15px;">Você tirou:</p>
+                    <div class="person-name" id="drawn-person"></div>
+                    
+                    <div class="emoji-large">⭐ 💝 ⭐</div>
+                    
+                    <div class="secret-message">
+                        <strong>🤐 SEGREDO SAGRADO:</strong><br><br>
+                        "Este é o maior segredo do Natal! 
+                        Ninguém pode saber que você tirou <span id="secret-name"></span>. 
+                        Prepare um presente especial e surpreenda-o no grande dia! 
+                        A magia do Amigo Secreto vive no mistério e no amor que você coloca em cada gesto." 🎅✨
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="backToHome()" style="margin-top: 20px;">
+                        ← Voltar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ IMPORTANTE: Modifique este objeto de sorteio conforme necessário
+        const sorteio = {
+            daniel: "Samuel",
+            lucas: "Milson",
+            jeane: "Zeza",
+            sandro: "Lucas",
+            mayara: "Malu",
+            milson: "Amanda",
+            julia: "Elis",
+            marcos: "Nadinho",
+            zeza: "Julia",
+            samuel: "Andressa",
+            elis: "Mayara",
+            nadinho: "Allyson",
+            xande: "Daniel",
+            malu: "Cicera",
+            cicera: "Xande",
+            andressa: "Sandro",
+            amanda: "Alicia",
+            alicia: "Jeane",
+            allyson: "Marcos"
+        };
+
+        // Criar efeito de neve
+        function createSnowflakes() {
+            const snowflakeCount = 20;
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = '❄️';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                snowflake.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(snowflake);
+            }
+        }
+
+        // Inicializar neve
+        createSnowflakes();
+
+        // Função para normalizar nomes (sem acentos, minúsculas)
+        function normalizeName(name) {
+            return name
+                .toLowerCase()
+                .trim()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
+        }
+
+        // Buscar pessoa
+        function searchPerson() {
+            const input = document.getElementById('name-input').value;
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = '';
+
+            if (!input.trim()) {
+                errorContainer.innerHTML = '<div class="error-message">😔 Por favor, digite seu nome!</div>';
+                return;
+            }
+
+            const normalizedInput = normalizeName(input);
+            let found = false;
+            let drawnPerson = null;
+            let originalName = null;
+
+            // Procurar nome no sorteio (com normalização)
+            for (const [person, drawn] of Object.entries(sorteio)) {
+                if (normalizeName(person) === normalizedInput) {
+                    found = true;
+                    drawnPerson = drawn;
+                    originalName = person;
+                    break;
+                }
+            }
+
+            if (!found) {
+                errorContainer.innerHTML = `<div class="error-message">❌ Desculpa! "${input}" não foi encontrado no sorteio. Verifique o nome e tente novamente!</div>`;
+                return;
+            }
+
+            // Mostrar resultado
+            document.getElementById('person-name').textContent = input.charAt(0).toUpperCase() + input.slice(1);
+            document.getElementById('drawn-person').textContent = drawnPerson;
+            document.getElementById('secret-name').textContent = drawnPerson;
+            document.getElementById('greeting').innerHTML = `Oi, <span id="person-name">${input.charAt(0).toUpperCase() + input.slice(1)}</span>!`;
+
+            showPage('result-page');
+        }
+
+        // Alternar páginas
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Voltar para home
+        function backToHome() {
+            document.getElementById('name-input').value = '';
+            showPage('home-page');
+        }
+
+        // Permitir Enter para buscar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('name-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchPerson();
+                }
+            });
+        });
+
+        function checkRoute() {
+            // Primeiro, verificar se veio do 404.html
+            const redirectPath = sessionStorage.redirectPath;
+            const currentPath = redirectPath || window.location.pathname;
+            
+            console.log("[v0] Checking route - redirectPath:", redirectPath, "pathname:", window.location.pathname);
+            
+            // Extrair o nome da URL (ex: /natal/daniel ou /natal/daniel/)
+            const match = currentPath.match(/\/natal\/([a-zA-Z0-9]+)\/?$/i);
+            
+            if (match && match[1]) {
+                const nameFromUrl = decodeURIComponent(match[1]);
+                console.log("[v0] Found name in URL:", nameFromUrl);
+                document.getElementById('name-input').value = nameFromUrl;
+                
+                // Limpar sessionStorage após usar
+                if (redirectPath) {
+                    sessionStorage.redirectPath = '';
+                }
+                
+                setTimeout(() => {
+                    searchPerson();
+                }, 100);
+            }
+        }
+
+        // Verificar rota ao carregar
+        window.addEventListener('load', checkRoute);
+    </script>
+</body>
+</html>
